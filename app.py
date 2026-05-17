@@ -64,10 +64,15 @@ def init_db_tables(connection):
                 susut_cetak DOUBLE
             );
         """)
-        # Tabel 4: Data Kualitas Cetak & CCP (Sort CCP 2)
+        
+        # --- PERBAIKAN DI SINI ---
+        # 1. Buat sequence generator terlebih dahulu jika belum ada
+        connection.execute("CREATE SEQUENCE IF NOT EXISTS seq_id_ccp;")
+        
+        # 2. Gunakan BIGINT dengan DEFAULT nextval() untuk auto-increment
         connection.execute("""
             CREATE TABLE IF NOT EXISTS log_ccp (
-                id_ccp SEQUENCE,
+                id_ccp BIGINT DEFAULT nextval('seq_id_ccp'),
                 batch_id VARCHAR,
                 tanggal_ccp DATE,
                 jenis_item VARCHAR,
