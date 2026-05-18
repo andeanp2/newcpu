@@ -9,7 +9,7 @@ import plotly.express as px
 wib_tz = pytz.timezone('Asia/Jakarta')
 st.set_page_config(page_title="Dynamic Traceability System", layout="wide")
 
-st.title("🔄 Reverse Traceability System - MotherDuck Integration")
+st.title("🔄 Reverse Traceability System")
 current_wib = datetime.now(wib_tz).strftime("%Y-%m-%d %H:%M:%S WIB")
 st.caption(f"Server Sinkronisasi: Online | Zona Waktu: {current_wib}")
 
@@ -85,7 +85,7 @@ if conn:
     init_db_tables(conn)
 
 # 4. ANTARMUKA MENU (TABS)
-tab1, tab2, tab3 = st.tabs(["🔍 Traceability Engine", "📝 Dynamic Input Forms", "📊 Analitik & Monitoring"])
+tab1, tab2, tab3 = st.tabs(["🔍 Traceability Engine", "📝 Form Input Data", "📊 Analitik & Monitoring"])
 
 # --- TAB 1: ENGINE PELACAKAN (READ-ONLY VIA SQL JOINS) ---
 with tab1:
@@ -124,7 +124,7 @@ with tab1:
                 
                 st.dataframe(res_df, use_container_width=True)
             else:
-                st.warning("Data kueri batch tersebut tidak ditemukan di repositori data MotherDuck.")
+                st.warning("Data kueri batch tersebut tidak ditemukan di repositori data Database.")
         except Exception as query_err:
             st.error(f"Kesalahan eksekusi SQL: {query_err}")
 
@@ -219,7 +219,7 @@ with tab2:
 with tab3:
     st.header("Arsip Audit Data Cloud")
     if conn:
-        inspect_select = st.selectbox("Pilih Tabel untuk Ditinjau Langsung dari MotherDuck:", 
+        inspect_select = st.selectbox("Pilih Tabel yang dibutuhkan dari database:", 
                                       ["Daftar Seluruh Komoditas", "Daftar Pemasok Teregistrasi", "Log Riwayat Transaksi Produksi", "Log CCP Komplet"])
         
         mapping = {
